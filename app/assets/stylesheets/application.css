@@ -27,7 +27,7 @@ h1, h2, h3 {
 
 a {
   text-decoration: none;
-  color: #2B3A42;
+  color: #FFFFFF;
 }
 
 nav {
@@ -39,4 +39,8 @@ nav {
 nav a {
   margin-left: 10px;
   margin-right: 10px;
+}
+
+nav a:hover {
+  color: #BDD4DE;
 }

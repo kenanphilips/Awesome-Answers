@@ -1,0 +1,19 @@
+<%= @question.errors.full_messages.join(", ") %>
+<%# if @question is persisted then the 'form_for' helper will mamke the action
+submit to question_path(@question) and it will make the HTTP request PATCH.
+form_for will also prepopulate the fields with the data fetched from the database
+%>
+<%= form_for @question do |f| %>
+  <%= f.label :title %>
+  <div>
+    <%= f.text_field :title %>
+  </div><br>
+  <%= f.label :body %>
+  <div>
+    <%= f.text_area :body %>
+  </div><br>
+  <div>
+    <%= f.collection_select :category_id, Category.all, :id, :name %>
+  </div><br>
+  <%= f.submit %>
+<% end %>

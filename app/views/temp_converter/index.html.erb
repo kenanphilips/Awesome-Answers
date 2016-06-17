@@ -1,0 +1,8 @@
+<h1>Convert Temperature</h1>
+
+<%= form_tag temp_converter_path do %>
+  <%= text_field_tag :temp, @temp %>
+  <%= submit_tag "Convert" %>
+<% end %>
+
+<%= @temp_f %>

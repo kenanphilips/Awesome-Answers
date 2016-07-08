@@ -1,21 +1,27 @@
 <!DOCTYPE html>
 <html>
 <head>
-  <title>AwesomeAnswers</title>
+  <title>Awesome Answers</title>
   <%= stylesheet_link_tag    'application', media: 'all', 'data-turbolinks-track' => true %>
   <%= javascript_include_tag 'application', 'data-turbolinks-track' => true %>
   <%= csrf_meta_tags %>
 </head>
 <body>
+
   <%= render "/layouts/navbar" %>
 
-  <% if flash[:notice] %>
-    <div class="flash-notice"><%= flash[:notice] %></div>
-  <% elsif flash[:alert] %>
-    <div class="flash-alert"><%= flash[:alert] %></div>
-  <% end %>
 
-<%= yield %>
+  <div class="container">
+    <% if flash[:notice] %>
+      <div id="flash-notice"><%= flash[:notice] %></div>
+    <% elsif flash[:alert] %>
+      <div id="flash-alert"><%= flash[:alert] %></div>
+    <% end %>
+  </div>
+
+<div class="container">
+  <%= yield %>
+</div>
 
 </body>
 </html>

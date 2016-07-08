@@ -9,4 +9,6 @@ end
   Category.create name: cat
 end
 
+30.times { Tag.create(title: Faker::Hacker.adjective) }
+
 puts Cowsay.say "Generated 300 questions!"

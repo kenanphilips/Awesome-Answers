@@ -1,0 +1,8 @@
+<center><h1>Questions You've Liked</h1>
+
+<% @questions.each do |question| %>
+  <%#= link_to question.title, question_path(question) %>
+  <%= link_to question.title, question %><br>
+  <br><br>
+<% end %>
+</center>

@@ -1,0 +1,7 @@
+<div id="<%= dom_id(answer) %>">
+  <h5><%= @user.full_name if @user %></h5>
+  <p><%= answer.body %></p>
+  <h6><%= time_ago_in_words(answer.created_at) %> ago</h6>
+    <%= link_to "Delete", question_answer_path(@question, answer), method: :delete, remote: true, data: {confirm: "Are you sure you want to delete this answer?"} %>
+  <hr>
+</div>

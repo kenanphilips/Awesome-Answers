@@ -1,25 +1,75 @@
+
+<center>
 <h1><%= @question.title.titleize %></h1>
 <p><%= @question.body %></p>
 <p>Views: <%= @question.view_count %></p>
-<!-- <p>Created By: <%#= @question.user.full_name %></p> -->
-<%= link_to "Edit", edit_question_path(@question) %>
-<%= link_to "Delete", question_path(@question),
-                      method: :delete,
-                      data: {confirm: "Are you sure?"} %><br>
-<h3>Have an Answer?</h3>
-<%#= form_for @answer, url: question_answers_path(@question) do %>
-<%= @answer.errors.full_messages.join(", ") %>
-<%= form_for [@question, @answer] do |f| %>
-  <div>
-    <%= f.text_area :body, {rows: "5", cols: "50"} %>
-  </div>
-  <%= f.submit %>
+<p>Created By: <%= @question.user.full_name if @question.user %></p>
+
+
+<% if @question.liked_by?(current_user) %>
+  <%= link_to fa_icon("thumbs-up"),
+              question_like_path(@question, @question.like_for(current_user)),
+              method: :delete, class: "like-icon" %><br><br>
+<% else %>
+  <%= link_to fa_icon("thumbs-o-up"), question_likes_path(@question), method: :post, class: "like-icon" %>
+<% end %>
+(<%= @question.likes.count %>)
+
+<% if @question.voted_up_by?(current_user) %>
+  <%= link_to "Voted Up",
+              question_vote_path(@question, current_user_vote),
+              method: :delete,
+              data: {disable_with: "...."}%>
+  (<%= @question.vote_sum %>)
+  <%= link_to "Vote Down",
+              question_vote_path(@question,
+                                 current_user_vote,
+                                 {vote: {is_up: false}}),
+              method: :patch %>
+
+<% elsif @question.voted_down_by?(current_user) %>
+  <%= link_to "Vote Up",
+              question_vote_path(@question,
+                                 current_user_vote,
+                                 {vote: {is_up: true}}),
+              method: :patch %>
+  (<%= @question.vote_sum %>)
+  <%= link_to "Voted Down",
+              question_vote_path(@question,
+                                 current_user_vote),
+              method: :delete,
+              data: {disable_with: "...."} %>
+<% else %>
+  <%= link_to "Vote Up",
+              question_votes_path(@question,
+                                  vote: {is_up: true}),
+              method: :post %>
+
+  <%= link_to "Vote Down",
+              question_votes_path(@question,
+                                  vote: {is_up: false}),
+              method: :post %>
+<% end %><br><br>
+
+
+<% if can? :manage, @question %>
+  <%= link_to "Edit", edit_question_path(@question) %>
+  <%= link_to "Delete", question_path(@question),
+                        method: :delete,
+                        data: {confirm: "Are you sure?"} %><br>
 <% end %>
 
-<h2>Answers</h2>
-<% @question.new_first_answers.each do |ans| %>
-    <%= ans.body %>
-    <p><%= time_ago_in_words(ans.created_at) %> ago</p>
-    <%= link_to "Delete", question_answer_path(@question, ans), method: :delete, data: {confirm: "Are you sure you want to delete this answer?"} %>
-    <hr>
-<% end %>
+<h6 style="color:grey">Tags: <%= @question.tags.map {|t| t.title.capitalize}.join(", ") %> </h6>
+
+
+<div id="answer-form">
+  <%= render "/answers/form" %>
+</div>
+
+<div id="answers">
+  <% @question.new_first_answers.each do |ans| %>
+    <%= render "/answers/answer", answer: ans %>
+  <% end %>
+</div>
+
+</center>

@@ -1,0 +1,7 @@
+<h3>Have an Answer?</h3>
+<%#= form_for @answer, url: question_answers_path(@question) do %>
+<%= @answer.errors.full_messages.join(", ") %>
+<%= simple_form_for [@question, @answer], remote: true do |f| %>
+  <%= f.input :body  %>
+  <%= f.button :submit, "Answer", class: "btn btn-default" %>
+<% end %>

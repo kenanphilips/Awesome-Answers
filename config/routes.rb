@@ -1,11 +1,14 @@
 Rails.application.routes.draw do
 
+  match "/delayed_job" => DelayedJobWeb, :anchor => false, via: [:get, :post]
 
+  resources :votes
   resources :users, only: [:new, :create]
   resources :sessions, only: [:new, :create, :destroy] do
     delete :destroy, on: :collection
   end
   resources :questions do
+    resources :votes, only: [:create, :update, :destroy]
     # This will define a route that will be '/questions/search' and will point to the questions controller 'search' action in that controller.
     # on: :collection makes the route not have an 'id' or 'question_id' on it.
     get :search, on: :collection
@@ -18,7 +21,12 @@ Rails.application.routes.draw do
 
     # This will make all the answers routes nested within 'questions' which means all the answers routes will be prepended with '/questions/:question_id'.
     resources :answers, only: [:create, :destroy]
+
+    resources :likes, only: [:create, :destroy]
+
   end
+
+  resources :likes, only: [:index]
   # get    "/questions/new"        => "questions#new",     as: :new_question
   # post   "/questions"            => "questions#create",  as: :questions
   # get    "/questions/:id"        => "questions#show",    as: :question

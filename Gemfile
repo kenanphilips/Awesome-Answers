@@ -16,6 +16,7 @@ gem 'coffee-rails', '~> 4.1.0'
 
 gem "cowsay"
 gem "faker", github: "stympy/faker"
+gem "font-awesome-rails"
 
 # Use jquery as the JavaScript library
 gem 'jquery-rails'
@@ -28,6 +29,18 @@ gem 'sdoc', '~> 0.4.0', group: :doc
 
 # Use ActiveModel has_secure_password
 gem 'bcrypt', '~> 3.1.7'
+
+gem 'cancancan'
+gem 'kaminari'
+gem "letter_opener", :group => :development
+gem 'delayed_job_active_record'
+gem "delayed_job_web"
+gem 'slim'
+gem 'bootstrap-sass'
+gem 'autoprefixer-rails'
+gem 'rack-cors', :require => 'rack/cors'
+gem 'friendly_id', '~> 5.1.0'
+gem 'simple_form'
 
 # Use Unicorn as the app server
 # gem 'unicorn'
